@@ -12,4 +12,4 @@ echo "停止旧容器并删除旧容器"
 docker stop my-nest-project-container
 docker rm my-nest-project-container
 echo "启动新容器"
-docker container run -p 3000:3000 --name my-nest-project-container -d my-nest-project
+docker container run -p 3000:3000 --name my-nest-project-container -d my-nest-project:1.0.0
