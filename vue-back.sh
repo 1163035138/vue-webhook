@@ -5,7 +5,7 @@ echo "先清除老代码"
 git reset --hard origin/main
 git clean -f
 echo "拉取最新代码"
-git pull origin master
+git pull
 echo "开始构建"
 docker build -t my-nest-project .
 echo "停止旧容器并删除旧容器"
