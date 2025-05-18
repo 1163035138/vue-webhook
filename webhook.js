@@ -8,6 +8,6 @@ let server = http.createServer(function (req, res) {
     res.end("Not Found");
   }
 });
-server.listen(4000, "localhost", function () {
+server.listen(4000, function () {
   console.log("webhook服务已经在4000端口上启动");
 });
