@@ -15,3 +15,5 @@ docker stop my-vue-project-container
 docker rm my-vue-project-container
 echo "启动新容器"
 docker container run -p 80:80 --name my-vue-project-container -d my-vue-project:1.0.0
+echo "清理悬空镜像"
+docker rmi $(docker images -f "dangling=true" -q) || true
