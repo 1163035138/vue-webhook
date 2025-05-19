@@ -1,5 +1,6 @@
 let http = require("http");
 let crypto = require("crypto");
+let { spawn } = require("child_process");
 let secret = "123456";
 function sign(body) {
   return `sha1=` + crypto.createHmac("sha1", secret).update(body).digest("hex");
@@ -19,9 +20,21 @@ let server = http.createServer(function (req, res) {
         res.end(JSON.stringify({ ok: false, message: "签名不正确" }));
         return;
       }
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ ok: true }));
+      if (event === "push") {
+        let payload = JSON.parse(body);
+        let child = spawn("sh", [`./${payload.repository.name}.sh`]);
+        let buffers = [];
+        child.stdout.on("data", function (buffer) {
+          buffers.push(buffer);
+        });
+        child.stderr.on("end", function (buffer) {
+          let log = Buffer.concat(buffers);
+          console.log(log);
+        });
+      }
     });
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({ ok: true }));
   } else {
     res.end("Not Found");
   }
