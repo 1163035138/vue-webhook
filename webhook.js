@@ -33,7 +33,7 @@ let server = http.createServer(function (req, res) {
         });
         child.stderr.on("end", function (buffer) {
           let log = Buffer.concat(buffers);
-          console.log(log);
+          console.log(log.toString());
         });
       }
     });
